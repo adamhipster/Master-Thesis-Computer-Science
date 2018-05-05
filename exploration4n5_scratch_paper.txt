@@ -1,0 +1,50 @@
+7.3 MEASURING FRUSTRATION
+Conventional hardware
+Conventional measures
++ facial expression as measure because everything else is too indirect
+
+7.4 ARCHITECTURE
+
+7.5 CLASSIFYING FRUSTRATION
+Literature review on how frustration has been classified
+
+--> I think I should mention in 7.5 that straight literature for only *my measures* were hard to come by.
+
+--------
+TIME SCRUBBING
+
+Within Subject difficulties
+... Parallel player difficulties
+... Users having choice difficulties
+
+Between subject difficulties
+... Between subject difficulties
+... interaction within & between subject difficulties
+
+I need to reread the chapter and structure this better
+
+
+NEW TIME SCRUBBING STRUCTURE OF CHAPTER
+1. Presenting future overlays in a single media item
+2. Within subject time scrubbing
+3. Between subject time scrubbing
+4. Interaction within and between subject time scrubbing
+
+Subjects
+... within
+... between
+... interaction
+
+Overlays
+... per media item
+... within subjects   (did not do this)
+... between subjects  (did not do this)
+
+MERGING THE TWO (holy shit this looks a lot like Knowledge and Media, taxonomy forcing a certain type of look or knowledge on the world, do I still have those reflections?)
+Subjects
+... within
+    +++ per media item overlay
+    +++ within subjects overlay
+... between
+    +++ between subjects overlay
+... interaction

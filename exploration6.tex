@@ -1,0 +1,42 @@
+\chapter{Exploration 6: extending the YouTube media type for partial subject refreshes}
+Note: this whole exploration is written as a story. Why? Because it is the final exploration of course. Ending it on a more festive note seems appropriate.
+
+As I was playing with the XIMPEL playlist I wanted to have some background music with my videos via YouTube. I then noticed that I wanted the background music to continue, but it couldn't. It couldn't continue because I was changing subjects. So I wanted for a media item to survive a subject switch. I call this a MISSS, a media item subject switch survivor. But how could I do this? Hmm... I wonder how. Could I signal to HTML5 that I want to keep a certain media item playing? All it needs to do is not to detach.
+
+After fiddling for hours I figured out that one way to do this is to put the model of the `mediatype` into the `playlistModel` for a second time in the `subjectModel`, just before the `subjectModel` came for which I wanted it to stop.
+
+This was the code in `YouTube.js`:
+\begin{lstlisting}[language=JavaScript]
+var sqModel = new ximpel.SequenceModel();
+sqModel.add(this.player.subjectModels["lesson1"].sequenceModel.list[0].list[0].list[0]);
+this.player.subjectModels["lesson2"].sequenceModel.list[0].add(sqModel);
+\end{lstlisting}
+	
+I also had to modify the stop function in the YouTube media type.
+
+\begin{lstlisting}[language=JavaScript]
+	if( this.player.currentSubjectModel.subjectId !== "lesson3") {
+		this.state = this.STATE_PLAYING;
+		console.log(this.mediaModel);
+		this.onEnd(this.player.sequencePlayer.mediaPlayer.handlePlaybackEnd.bind(this));
+		return;
+	}
+\end{lstlisting}
+
+So how would I solve this? I wanted to let the implementation of media item subject switch survival (also called MISSS) rest on the shoulders of the media type developer, which is a pretty big ask since they develop plugin-like code and do not want to change the core of XIMPEL. What was missing was internal knowledge about the `mediaModel` in-memory configuration object for extending XIMPEL. Having access to that means that a media type developer is able to add and remove this `mediaModel` to or from the in-memory configuration object on the fly. The media type developer could now dynamically alter the XIMPEL playlist.
+
+In the `constructMediaItems` method I added a fifth argument, the entire `mediaModel`. Since the media type developer has access to the complete player object he or she could traverse the whole in-memory configuration (i.e. the playlist) recursively and eventually add the media model wherever one's heart desires. The code on how to extend the media type is in appendix \ref{chap:exploration6_appendix} and implemented in XIMPEL JS.
+
+I tested if nested parallel players would work and they do. The reason is because the first `traverse` function searches for the media model that is needed. Therefore, it will always find what it needs (the media model) and is at that point unconcerned with how nested this media model is. Furthermore, the `insertModel` function will add the model to the nearest parallel model (e.g. ``lesson3'') of the subject model just before the final subject model where it needs to stop (e.g. ``lesson4''). In this case the method of adding the `mediaModel` is a bit crude, since there is no concept of nesting. However, this is not needed, since all that is required is for the `mediaModel` to signal the stop event to the XIMPEL player after the subject switch from where it is dynamically inserted. For example, let's suppose a media item needs to stop at a subject called \textit{lesson 4} and before \textit{lesson 4} there is a preceding subject called \textit{lesson 3}. By dynamically inserting the `mediaModel` into \textit{lesson 3}, the stop event will be triggered after the subject switch from \textit{lesson 3} to \textit{lesson 4}, meaning the media item will be removed when the XIMPEL player switches to \textit{lesson 4}.
+
+Finally, after writing all my code I could listen to my background music. I had a real MISSS since YouTube videos could survive a subject change. I then thought about how to do this for non-parallel (i.e. sequential) media and realized that it would be rather silly. A single playing media item does not need to survive a changing subject since it is the only media playing! This means that this feature is fundamentally made possible by the parallel player!
+
+The only question that remains is: should this become a core feature of XIMPEL? I do not think so. XIMPEL should stay true to its name and origin and be simple. I consider this feature to be intermediate to advanced. Consider this, for almost 10 years the framework relied on the idea that when a subject changes, all the playing media items change as well. It may confuse novice people -- new to XML, let alone programming -- that it is also possible to let media items survive a subject change. It redefines the idea of what a subject is and the definition may be less clear, which is fine if a media type provides that as an advanced option for its instantiated media items, but not the framework itself. It should stay XIMPEL.
+
+Since we have one media type programmed in this manner it is possible to see how many people will catch onto this idea in the workshops where XIMPEL is presented and demonstrated. If in those workshops, people would like to have this as a core feature, then it may be a good idea to change the framework and add it.
+
+One way of changing the core framework is to not change it at all, but to increase the power of the extensibility of the framework. Now, it is only possible to extend the framework through media types. This is wonderful but has the limitation that a developer needs to sometimes duplicate code if he or she wants to program the same functionality in other media types. Regarding a MISSS, what we could also do is to create a JavaScript file that share utility functions -- like the ones I wrote for this exploration -- and expose these functions for all media types.
+
+Two types of future work could still be considered. (1) It currently is available as an attribute. Perhaps there is a more intuitive syntactic form so that the MISSS follows more intuitively by reading the code. (2) Currently, it is only possible to let a media item survive a subject switch for only one subject. Maybe there are multiple subjects at which a media item should stop. If this feature gets requested in upcoming XIMPEL workshops, then such a change should be made. 
+
+\textbf{Addendum (months later).} This feature has been added to the core of XIMPEL React, since I wanted background music there as well. The reason it is added to the core of XIMPEL React and not via a plugin functionality like in XIMPEL JS is because it simply was a lot easier to add it in XIMPEL React as a core feature. Just as it was easier for XIMPEL JS to implement it as part of a plugin extension. And while XIMPEL needs to stay simple, there is something to be said for implementing a feature that has been explicitly described as part of the Amsterdam Hypermedia Model \cite{hardman1994}. This does mean that the architecture of XIMPEL React has a disadvantage, or perhaps not since it shows XIMPEL React is less hackable.

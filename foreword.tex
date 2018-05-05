@@ -1,0 +1,155 @@
+% CS (Bsc. / Msc.), Psychology of Gaming (Honours Bsc. / Msc.), International Business & Entrepreneurship (double minor), Ui/UX (200 hour bootcamp)
+
+\section{Preface or foreword}
+% https://try-dat.com Good example of a tutorial that I'd like to emulate with XIMPEL
+% https://github.com/mafintosh/docker-browser-console
+% https://github.com/maxogden/get-dat
+
+% http://ximpel.few.vu.nl/
+% http://ximpel.net
+
+TO DO: Where do I add Stenzler and Eckert \cite{stenzler1996}?
+
+For now, this is the place where I will list all my Github stuff and give people a recommendation on what to check out before reading this thesis.
+
+% Talk about RAPT, zij doen iets met Interactive video: https://www.learningsolutionsmag.com/articles/1292/interactive-video-the-next-big-thing-in-mobile
+
+Future work:
+look for production interactive video stuff and replicate it in XIMPEL.
+% https://www.mycustomer.com/experience/engagement/could-interactive-video-shape-the-future-of-customer-engagement
+% http://watch.zentrick.com/m5tMjr/
+% https://www.wirewax.com/examples -- via whoishiring.io
+% https://helloeko.com/stories/
+
+% For production quality: how to add nice animations? Should be its own media type?
+% Nice overlay media type
+% Nice overlay animations
+
+Github:
+
+\url{https://github.com/melvinroest/XIMPEL-JS}
+
+\url{https://github.com/melvinroest/XIMPEL-React}
+
+\url{https://github.com/melvinroest/ximpel-analytics-server}
+
+\url{https://github.com/melvinroest/ximpel-terminal-media-type-server}
+
+To checkout:
+
+\url{http://ub-viz01.uio.no/abelprisen/}
+
+\url{http://classic.ximpelapps.nl/zaanseschans_html5/}
+
+To read:
+
+\url{http://www.ub.uio.no/om/prosjekter/the-visualisation-project/news/abel-prize-app.html}
+
+% A peculiar thing in multimedia research is that peer reviewed papers that introduced a tool are also findable on YouTube. I found these YouTube videos easier to understand and will break the tradition of scientific citation by including them in the reference lists, next to the paper.
+
+% What is XIMPEL about? Is it about hypermedia? Is it about interactive video? A ``poor man's immersion?'' \textbf{citation needed} Or is it about gaming or education, including MOOCs? It is none of these, but it draws elements from all of these. XIMPEL is a framework that is an exploration to users. We see what users come up with and what they want to do with it, and that is what XIMPEL is.
+
+% How is computer science science?
+
+% Exploration 4 and 5: literature searchers are a contribution
+
+XIMPEL is like: LaTeX is to Word. XIMPEL is a simple typesetting system but then for powerpoint.
+Finite state machines are to computers. XIMPEL is a subset of everything that is computable, moreover it is multimedia.
+
+Talk about how preserving the creative process is important
+
+XIMPEL could be used for MOOC remixing
+
+Hypermedia menu linking (e.g. 4 by 4 grid with videos popping up which are fully overlayed)
+
+
+How is XIMPEL different from HTML? HTML has a lot of industrial support and its own namespace. But it is in essence the same: some kind of engine that renders the tags.
+
+Take design inspiration from SMIL
+
+----
+SMIL NOTES
+
+The only thing it did is adding the audio and video tag -- 11:10
+There is a DOM API behind it
+https://www.youtube.com/watch?v=xqups1sSlHI
+
+NCL is a Brazilian spec ccitt standard. It's important for interactive tv
+--> Comparable to SMIL
+
+SMIL is all about multimedia composition.
+
+13:46 -- What is SMIL?
+
+Optional playback? --> opting out of media items
+
+While watching the video it was weird to see how many thoughts I had were the same thoughts of 6 years ago.
+
+---
+Timeline is static which has a disadvantage.
+The image by default plays as long as the longest thing.
+--> This is handy -- Melvin: no it isn't!
+
+XML is tractable
+
+19:50 -- but it can be complicated (programming videos in HTML)
+
+21:40 -- limitation of declarative hypermedia
+
+22:10 -- interactive travel guide example
+
+26:00 -- security updates issue and therefore the SMIL presentation didn't work anymore
+
+Hmm... compared to SMIL XIMPEL seems like a hypermedia micro-framework
+
+34:30 -- More use cases
+Interactive Courseware (Games, quizzes)
+Reactive Digital Signage (GPS-based, other environmental variables)
+
+
+
+===
+I really liked this presentation. I'm currently doing my thesis on hypermedia frameworks and seeing SMIL so well-explained really cleared a few things up, especially regarding HTML to SMIL interaction. Thanks for showing it to me. It surprises how many of the same thoughts I actually had regarding potential hypermedia features, seeing them already implemented in SMIL. I don't necessarily agree that a timeline should be omitted. Automatic synchronization is a good tool, but I think it'd be better to let the author of a SMIL presentation decide which metaphor of time to use. Yes: German does take a longer time and therefore the image could be presented longer, but what if, for some reason, the author wanted to show the image for 20 seconds regardless of the audio content length? Maybe SMIL can already do this, but it wasn't mentioned in the presentation. The assumption that video and audio control the time of images seems like video and audio have superpowers over other forms of media.
+
+But still, it was a really interesting presentation to watch. So thanks Jack!﻿
+===
+
+Example of a presentation: https://www.youtube.com/watch?v=FSJrrc4KF_Y
+SMIL presentation (2011): https://www.youtube.com/watch?v=xqups1sSlHI 
+% SMIL, Synchronized Multimedia Integration Language - Jack Jansen
+
+Also mention DAISY: https://en.wikipedia.org/wiki/DAISY_Digital_Talking_Book
+http://www.daisy.org/search/node/smil %accessibility
+END SMIL NOTES
+---
+
+Hoi hoi,
+
+Ik ben even kort aan het brainstormen. 
+
+Stefan heeft een consequentie van zijn XIMPEL port in zijn thesis niet besproken dat misschien implicaties heeft. Dus ik wil even wat meer bewustzijn hiervoor.
+
+In de ActionScript versie van XIMPEL kon je een XIMPEL applicatie maken. Ik neem aan dat XIMPEL gekoppeld werd via de object tag of iets dergelijks. Wat ik mij afvroeg: was het destijds mogelijk om een HTML applicatie daaromheen te ontwikkelen?
+
+In JavaScript heeft dit sowieso een consequentie! Doordat het nu allemaal vertaald wordt naar HTML, bestaat er een mogelijkheid om de XIMPEL applicatie dynamisch aan te passen via de DOM API! Dit is niet het geadverteerde gebruik van XIMPEL, maar het kan en dat heeft grote gevolgen.
+
+In hoeverre zou het zin hebben om XIMPEL volledig te mixen met HTML, dat wil zeggen dat je XIMPEL op zo'n manier maakt dat het een superset is op HTML, dus in feite zijn het een paar extra tags? Geeft dit ons extra nuttige mogelijkheden voor de power users?
+
+De volgende vormen van XIMPEL zijn in principe mogelijk en ik vraag me af welke men zou willen gebruiken:
+1. XIMPEL als standalone applicatie
+2. XIMPEL als standalone applicatie maar met een HTML website eromheen (dit kan omdat de <body> tag er altijd omheen zit).
+3. XMPEL interacterend met de JavaScript van de HTML pagina (dit kan want de huidige XIMPEL vertaald alles naar HTML5 tags)
+4. XIMPEL compleet intermixend met HTML.
+
+Met hartelijke groet,
+Melvin Roest
+
+---
+
+First year computer science students at Vrije Universiteit Amsterdam could follow a XIMPEL command-line tutorial as their first course, without installing anything. The course itself could be implemented within a day, provided that all the artwork and written course material would be there. It is beyond me that the Vrije Universiteit Amsterdam never had a command-line tutorial in the first place when I followed courses there. Not learning the command-line early on has handicapped me in my education. Furthermore, in some computer science courses there is the problem of installing software, by having a command-line tutorial online this problem does not exist.
+
+---
+
+If I would be in a classroom I would raise my hand and ask: to what extent is this science? One time I did this in a computer security class and got told ``it is not science, it is engineering'' (\cite{bama2015} personal communication). What I learned from that exchange and from these papers is the following: if academics are allowed to build video browsing tools based on without regard for any theory or conceptual model other than their own intuitions as justification, I can do that too\footnote{While this could be interpreted as a critique, it can also be an acknowledgement of how difficult it can be to do science and go through the empirical cycle completely. I follow Hacker News (\url{http://news.ycombinator.com}) more or less every day and in the comments on machine learning topics it is often stated that a lot of academic deep learning papers follow more or less a similar pattern. Which is: researchers create a new architecture, it produces better results on the outcome they wanted and they have no idea why. Deep learning (and similar techniques) are not fundamentally well understood yet. And that is okay, for now. As is shown in this chapter: non-linearity is a difficult topic to untangle.}.
+---
+

@@ -1,0 +1,95 @@
+PROGRAMMING STORIES
+---
+I am programming together with my girlfriend. I am trying to make a fractal type of triangle in JavaScript. The catch: I am not allowed to use arrays and I am not allows to use a coordinate system. All I am allowed to do is uses spaces and star -- as far as triangle placement goes. 
+
+I am able to get a triangle.
+I am able to get multiple triangles.
+I am able to space multiple triangles.
+I am able to get triangles of triangles.
+I am sort of able to place them.
+And this is where I get stuck.
+For hours I spent time staring at my computer screen, but I can't seem to find the solution on how to create triangles of triangles of triangles.
+I go to bed.
+And 10 minutes later without thinking about anything, the solution pops into my head.
+
+But why does this happen? How is it possible that when I focus and deliberatively think, I get nowhere? Whereas when I do nothing and chill, I just get the answer given to me on a silver platter as a courtesy of my subconsciousness. To what extent do I control my own decisions and to what extent am I just a biological algorithm that is just execution of which the core mechanisms are unknown to me. 
+
+Who am I? Is it ever possible to fully understand myself? The weird thing is, I know more about myself through the discoveries of other people. I wonder if knowledge on the answer will help me understand why eureka moments happen when one does not do anything.
+
+I fall asleep.
+
+And I dream of triangles.
+
+---
+
+As I was playing with the XIMPEL playlist I wanted to have some background music with my videos via YouTube. I then noticed that I wanted the background music to continue, but it couldn't. It couldn't continue because I was changing subjects. So I wanted a partialSubject change. But how? Hmm... I wonder how. Could I signal to HTML 5 that I want to keep a certain mediatype playing? All it needs to do is not to detach.
+
+After fiddling for hours I figured out that one way to do this is to put the model of the mediatype into the playlistModel for a second time in the subjectModel just before the subjectModel came for which I wanted it to stop.
+
+This was the code:
+var sqModel = new ximpel.SequenceModel();
+	sqModel.add(this.player.subjectModels["lesson1"].sequenceModel.list[0].list[0].list[0]);
+	this.player.subjectModels["lesson2"].sequenceModel.list[0].add(sqModel);
+	
+I also had to modify the stop function in the YouTube media type
+	if( this.player.currentSubjectModel.subjectId !== "lesson3") {
+		this.state = this.STATE_PLAYING;
+		console.log(this.mediaModel);
+		this.onEnd(this.player.sequencePlayer.mediaPlayer.handlePlaybackEnd.bind(this));
+		return;
+	}
+	
+So how would I solve this? I wanted to let the implementation of partial reloads rest on the shoulders of the media type developer. What was missing was internal knowledge about the in-memory configuration object. Having access to that means that a media type developer is able to add and remove in-memory configuration objects on the fly.
+
+That is what I did. In the constructMediaItems function I added a fifth argument, the entire mediamodel. Since I have access to the complete player object I could traverse the whole in-memory configuration recursively and eventually when I looked for what I needed, I just needed to add it. I am not the best recursive thinker and therefore only added support for one nested parallel model, not multiple. 
+
+I tested if nested parallel players would work and they do. The reason is because the first traverse function searches for the media model that is needed. Therefore, it will always find what it needs (the media model) and is at that point unconcerned with how nested this media model is. Furthermore, the second traverse function will add the model to the nearest parallel model (e.g. "lesson3") of the subject model just before the final subject model where it needs to stop (e.g. "lesson4"). In this case the adding is a bit crude, since there is no concept of nesting. However, this is not needed, since all that is required is that there is a possibility for parallel play.
+
+	var traverse = function(model, path){
+		path.push(model);
+		if(model instanceof ximpel.MediaModel){
+			for (var i = 0; i < model.overlays.length; i++) {
+				var overlay = model.overlays[i];
+				for (var j = 0; j < overlay.leadsToList.length; j++) {
+					var leadsTo = overlay.leadsToList[j];
+					if(customAttributes.stopAtSubjectId === leadsTo.subject){
+						insertModel(path.slice());
+						return;
+					}
+				}
+			}
+			return;
+		}
+		for (var k = 0; k < model.list.length; k++) {
+			traverse(model.list[k], path.slice());
+		}
+	}.bind(this);
+
+	var insertModel = function(path){
+		var subjectId = path[0].subjectId;
+		var sequenceModel = this.player.subjectModels[subjectId].sequenceModel;
+
+		var traverse = function(sequenceModel){
+			for (var i = 0; i < sequenceModel.list.length; i++) {
+				var model = sequenceModel.list[i];
+				if(model instanceof ximpel.ParallelModel){
+					var sqModel = new ximpel.SequenceModel();
+					sqModel.add(this.model); //create SequenceModel
+					model.add(sqModel);					//insert in Parallel Model
+					return;
+				} else {
+					traverse(model.list[i]);
+				}
+			}
+			return;
+		}.bind(this);
+
+		traverse(sequenceModel);
+	}.bind(this);
+
+---
+
+A media model is not a media item
+
+---
+

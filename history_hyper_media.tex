@@ -1,0 +1,131 @@
+% TO DO: do all the comments!
+
+\chapter{A brief Amsterdam-centric history of hypermedia}
+% Why hypermedia is important (next 3 paragraphs)
+The research area that the XIMPEL framework connects with or situates itself in are: education, game-design, narrative structure, interactive video and hypermedia. There might be more areas, but previous research regarding XIMPEL has been around these areas \cite{eliens2008, eliens2016, eliens2007, stefan2016}. A chapter published in 2016 about XIMPEL is called:``XIMPEL for Education -- inspiring creativity through storytelling and gameplay.'' Furthermore, XIMPEL presentations themselves demonstrate that they are a form of interactive video. A user is able to click on overlays and then jumps to another video which could be part of a narrative. Interactive video is a part of hypermedia and since more media items are able to be linked in XIMPEL one could argue that XIMPEL itself is a hypermedia framework or at the very least heavily inspired by one.
+
+Because of this it is of utmost importance to describe this field. Hypermedia is the research field where fundamental questions regarding XIMPEL lie. Without the ideas of hypermedia, and by extension ideas surrounding the world wide web, there would be no XIMPEL. By portraying the historical roots, any reader is able to have an idea of how this research field has developed. On another note, to a certain extent, the research field of interactive video is implicitly described a little bit as well since it is part of hypermedia.
+
+Education, game-design and narrative structures are research fields of their own that are more into connection with XIMPEL than the context of XIMPEL. This is because it is possible to create presentations or applications with XIMPEL that may show unexplored topics of research within these areas of research. Since not all XIMPEL presentations or applications are subsumed under these research fields, they will not be described from a historical perspective. There where it is needed, research from these areas will be used as reference.
+
+%Define hypermedia (if easy, otherwise don't) -- currently don't
+%https://en.wikipedia.org/wiki/Hypermedia misschien inspiratie?
+\section{What is hypermedia}
+Hypermedia is to media what hypertext is to text. Moreover, text is a form of media. The idea of hypertext itself is confusing since it can be seen as (1) text with links or (2) the HTML specification. HTML is a markup language for hypertext, but there are also images and since HTML5 also videos and audio. It could be argued that HTML5 has hypermedia elements, much more so than the earlier versions of HTML. The conceptualization of hypermedia started in the early 90's, and during that time HTML was purely meant for (hyper)text\cite{html1}. Hence, the first definition of hypertext seems to be the intended definition by the authors of the early 90's. So a hypermedia system can be viewed as a system that is able to display all forms of media and all forms of media can be linked to each other in the way that users are nowadays familiar with the web (e.g. by tapping or clicking on areas that link to some other form of media).
+
+Regarding the implementation of a hypermedia system it needs to have 3 components: (1) a description of its media components, (2) a way of defining relationships between media components such that they are connected and (3) a way of presenting these components on the computer screen. Media components could be blocks of text, animations, audio, video and user-defined media components. Links describe the relationships between media component. The idea of linking could be defined in a number of ways. The presentation can be determined by the hypermedia system itself through a rendering system. 
+
+Specifically for XIMPEL these 3 components have been realized by using web technologies. (1) the description of media components are described in XML within a document called the playlist, (2) overlays (hovering rectangles or other shapes that are clickable) can be laid over the media item playing within XIMPEL and when clicked, it stops the current media playing item and plays the media item that the overlay links to. (3) The Flash player used to be the rendering engine of XIMPEL. Nowadays, it is the browser for which HTML5, CSS and JavaScript are needed regarding the rendering process.
+
+%For a quick overview see: http://www.cyberartsweb.org/cpace/ht/christanto/dexter_model.htm
+%Difference between WWW and Dexter: http://www.shlomifish.org/humour/fortunes/show.cgi?id=tim-berners-lee-the-WWW-and-the-dexter-model
+
+%The WWW and the Dexter Model
+%https://en.wikipedia.org/wiki/Ted_Nelson misschien erbij?
+% http://paul.luon.net/hypermedia/chapter6/modelsFrameworks/dhrm.html
+% \section{The Dexter Hypertext Reference Model}
+%The Dexter Model and What were their methodologies?
+Research in hypermedia has been conceived by research on hypertext systems. Most notably, the Dexter Hypertext Reference Model has been influential in the development regarding popular hypermedia concepts \cite{hardman1994}. It has been a competing against the hypertext model of Tim Berners-Lee who created the world wide web as we know it today. The model itself came into existence after two small workshops on hypertext, which had representative participants for most major hypertext systems made during that time. Halasz, Schwartz, Gr{\o}nb{\ae}k, Kaj and Randall remarked that the model ``is an attempt to capture, both formally and informally, the important abstractions found in a wide range of existing and future hypertext systems'' \cite{halasz1994}. 
+
+%What is it?
+%Insert figure or create yourself -- currently don't
+The Dexter Hypertext Reference Model (hereafter Dexter Model) has three layers: the run-time layer (user interaction mechanisms), the storage layer (a network of nodes and links to those nodes) and the within-component layer (content and structures within hypertext)\cite{halasz1994}. A big difference compared to the world wide web today is that links needed to resolve both ways \cite{fisher2007}. If this was not the case, then if one hypertext component was deleted, every hypertext component linking to it would need to delete its link. 
+
+%How is it relevant for hypermedia?
+% The relevance of the Dexter Model to hypermedia to date is the methodology of its conception. By looking at the most well-known hypertext systems of then, summarizing them and discussing them with peers a technical vocabulary has been created. The methodology and academic relevance for the use of XIMPEL will be inspired by this manner of motivating the academic relevance of a system. Furthermore, the Amsterdam Hypermedia Model, which is the most influential model on hypermedia, took the idea of the hyperlink and combined it with their pre-existing media model: the CWI Multimedia Interchange Format.
+
+
+
+%file:///Users/melvinroest/Downloads/The_Amsterdam_Hypermedia_Model_Adding_Time_and_Con.pdf
+\section{The Amsterdam Hypermedia Model}
+The Dexter Model gave rise to the predecessor of what was going to be the most popular hypermedia framework for about twenty years: The Amsterdam Hypermedia Model. The underpinnings of it eventually became a W3C recommendation in the form of SMIL \cite{ossenbruggen2001}. It began by addressing the limitations of the Dexter  Model for describing hypermedia. Hypertext and hypermedia are not the same so it seems obvious that these limitations should exist. Hardman and Bulterman stated that ``it has no notion of time beyond the within-component layer,'' \cite{hardman1994} such as the Dexter Model has and further stated it has ''no way of specifying higher-level presentation information, and no notion of context for an anchor'' \cite{hardman1994}. Context here means: does the whole presentation change or just a part of it? At the time their own media model, the CWI Multimedia Interchange Format (CMIF), had the drawback that it did not specify links but did address the other issues that the Dexter Model had. The solution was taking inspiration from both and it could be argued that The Amsterdam Hypermedia Model in its shortest (and not fully accurate) description is the combination of CMIF with linking capabilities inspired by the Dexter Model. 
+
+The Amsterdam Hypermedia Model (AHM) is about combining multimedia in such a way that it forms a presentation in which there is the possibility of (non-linear) choice at certain moments. For example, one could watch a penguin video, see a header text penguins and then be presented with the choice to let them dance or to let them walk a bit more. One could then interact with the video by stating the choice and then a subsequent video with new header text would be displayed. We will now look on what the elements of the AHM are that allow us to create such a multimedia presentation.
+
+%synchronization (timing relations)
+%composition: A slight change to composition in the Dexter model is the removal of the contents for a composite component. We restrict the presence of contents (data blocks in the CMIF model) to atomic components. This gives a cleaner notion of composition and removes complications about where the contents exist in the presentation hierarchy— they are always at the leaf nodes.
+%Atomic component: can contain static media (image) or dynamic media (video)
+%Composite component can be: parallel or choice -- choice means that one of the children is played
+
+\subsection{Components}
+The AHM has multimedia resources which can be an image, text, video or music. These resources are called atomic components. The other component is a composite component which can either be a component that plays atomic components in parallel or a component that allows the user to select one atomic component to be played. These are two respective types (parallel or choice) of the parallel component. This design feature is \sout{stolen} direct inspiration regarding parallel media play in XIMPEL (see chapter \ref{chap:exploration2}).
+
+% Figure 7. Timing relative to sibling
+% (a) Children start at the same time.
+% (b) Right-hand child starts with a specified delay after left-hand child. (c) Right-hand child starts after left-hand item ends.
+% (d) Children end at same time.
+%Synchronization arcs are needed for atomic media items that are not siblings
+
+%About time
+% What is a Sync-arc?
+% When one element defines a begin or end time relative to the begin or end of another element. 
+% img begin="foo.begin" end="bar.end" ...
+% Creates an additional 'arc' in the timegraph
+% Defines a time dependency
+% 'Short' and 'long' sync arcs
+% Define timing, not runtime sync!
+
+% Sync-arcs & time dependents
+\subsection{Time}
+The AHM had a way of defining time relationships between siblings and children in a parallel component in the form of synchronization constraints. These constraints are necessary, otherwise no one knows when something ought to be played. The AHM also has the capability to define time relationships between different (non-family) components via synchronization arcs, which are optional. An example of a synchronization arc is when a video plays, then it is optional to have subtitles but if subtitles are played, then they need to start 5 seconds later than the video.
+
+
+% In the Amsterdam hypermedia model, channels are used to define a default presentation style for the atomic com- ponents which are played via that channel. Channels are defined globally (for a collection of documents) and are referenced by each atomic component. A channel applies to only one media type. A number of channels may be appropriate for any one atomic component. Only one atomic component can occupy a channel at any one time.
+\subsection{Channels}
+How is certain media presented? Is there space for a menu? How does that look like when a video is played? Can a video play full screen when there is a menu? These questions are all about the general styling of a multimedia presentation. To answer these questions, the AHM introduced the idea of channels. Channels are ``output devices for playing multimedia items'' \cite{hardman1994}. Channels play an atomic component, for example: one channel could be playing videos, whereas another channel would display text. It is not possible for a channel playing videos to also play text. Also, a channel can only play one atomic component at a time. Examples of channel definition are: the default font size, size of the window, z-index layers, and position of the multimedia element (atomic component). One could already imagine that generic layouts are a good use case for channels since channels are reusable.
+
+%Link context is interesting
+%A link introduces the concept of choice
+
+\subsection{Links}
+Since the Dexter Model is different than the current model of the world wide web, the idea of links here are slightly different as well. A link in the AHM can have a context. A link context allows for specification for which part of the document needs to change. Specifying a link context has the idea that when a presentation changes, it only changes what it needs to change, allowing for reusability of the components in the AHM. Links ought to be clicked, and therefore links introduce choice. For this reason, the choice component is an obvious but necessary requirement.
+% In the web-development world contextual links are now in production through JavaScript frameworks such as ReactJS by defining React components (React also has a concept which they call components).
+
+%CREATE EXAMPLE DIAGRAM OR STEAL IT -- example diagram of what? -- currently don't
+
+
+
+%Paper with SMIL Editor: https://homepages.cwi.nl/~dcab/PDF/WWW7.pdf
+%https://homepages.cwi.nl/~media/SMIL/Tutorial/SMIL-4hr.pdf
+% http://www.cs.vu.nl/~eliens/demo/2-2.html
+%https://www.w3.org/standards/techs/smil#w3c_all
+\section{SMIL}
+``Most constructs in CMIF and SMIL are explicitly modeled by the Amsterdam hypermedia model'' \cite{ossenbruggen2001}. Therefore, SMIL could be seen as the successor of the proposed AHM. SMIL has been the standard on synchronized multimedia until 2013. While SMIL has been supported by a lot of well-known companies, it has not been supported by all of them. Unfortunately, the SMIL working group disbanded and SMIL is not updated anymore\cite{smilStatus, smilStatus2}. Moreover, future ideas of SMIL seem not to be included as a standard, such as Time Style Sheets \cite{timestylesheets2014}. It seems that HTML5 bares the burden of bringing hypermedia to the masses \cite{smilStatus2}, albeit much less feature rich. An example of a SMIL presentation can be found here \cite{SMIL_example} and a lecture about SMIL 3.0 and how the XML tags look like can be found here \cite{SMIL_lecture}. Current SMIL presentations need an external player or browser plugin.
+
+\section{XIMPEL}
+In 2007 a new hypermedia framework started called the eXtensible Interactive Media Player for Entertainment and Learning \cite{eliens2016, eliens2008}, or in other words: XIMPEL. It was created in order to design a game about climate change. The goal was to lead the debate away from pathos (emotional arguments) and towards logos (logical arguments) \cite{eliens2007, eliens2008}. Before XIMPEL was conceived, the idea was to create an immersive game with the Half-Life SDK about climate change. However, it seemed infeasible because of too few resources. Therefore, the team created the XIMPEL framework and decided to created a game purely based on videos still allowing for what they called a \textit{poor man's immersion}. 
+
+Borrowing ideas from hypermedia for game development was perhaps overlooked at the time since hypermedia formats -- including its platforms -- such as SMIL were focused on a good structure of hypermedia. Where probably most (if not all) hypermedia platforms focused on the formalities of a hypermedia system. The XIMPEL platform focused on exploring possible applications. XIMPEL was created out of necessity for an educational game that would otherwise take a long time to make. From this perspective, XIMPEL should be compared to game development engines and it is one of the most unconventional game development engines in existence.
+
+Over the years the framework has evolved from its Flex SDK/Flash roots to a HTML5/JS/CSS version. One creator (Anton Eli\"ens) of XIMPEL taught every year how to use it to first year information science students\footnote{I was a student in one of these years}. These students created at least one presentation with it in a group of 2 or 3. In some cases, students ran into technical problems and either extended XIMPEL themselves or through the help of Winoe Bhikharie. By doing this Anton and Winoe unwittingly explored the question: what can hypermedia mean for serious games? Moreover, what hypermedia presentations are relevant and interesting? While XIMPEL is a hypermedia system, the questions explored with it are about serious games and non-linear narratives. 
+
+% Touch screen applications
+Current future work regarding XIMPEL is expanding the framework for usage of big tablet installations at museums. One example of that is an app made for the Abel Prize, which is a prestigious prize for mathematicians \cite{abel_prize}. Workshops are given in Norway to librarians for whom the XML format is easy to work with. 
+
+So XIMPEL is useful for:
+\begin{itemize}  
+    \item education,
+    \item prototyping digital games,
+    \item video narratives/interactive storytelling,
+    \item storyboarding,
+    \item big tablet installations
+\end{itemize}
+
+% Explain how XIMPEL works?
+
+% http://www.fxpal.com/publications/synchronizing-web-documents-with-style.pdf -- Bulterman 2014 Time Style Sheets
+\section{Now}
+Hypermedia is still here. One of the creators of SMIL (Dick Bulterman) asked himself how the ideas he knows from SMIL could be useful for CSS. He  proposed additional CSS attributes to the W3C \cite{timestylesheets2014}. Hypermedia and hypervideo systems have been ported to HTML5/JS/CSS and are still used today \cite{meixner2016, celentano2017, busson2017}. 
+
+All systems have their own unique spin on it. Some emphasize videos  \cite{meixner2016} or mix it with it with other ideas of software engineering (e.g. learning objects) \cite{busson2017}. Others focus on hypermedia systems \cite{celentano2017}. 
+
+To clear out confusion, this thesis is not about hypermedia APIs. A concept in API-design that allows for REST-based APIs that are more robust. For example, it is easier to avoid backwards compatible breaking changes compared to standard REST API-design.
+
+% ask yourself what you want to do here -- talk about the changing role of hypermedia I suppose
+% Footnotes here are fine
+With the advent of HTML5 the role of hypermedia will be different. Considering an HTML document merely as a document and not as a possible software application would be short-sighted. Thanks to JavaScript it is possible to create: Linux in the browser \footnote{\url{https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg}}, create a programmable computer through the Game of Life \footnote{\url{https://codegolf.stackexchange.com/questions/11880/build-a-working-game-of-tetris-in-conways-game-of-life}} or create anything else that one could imagine. In short, it used to be very difficult to create any application -- requiring technologies like Flash. Now this is not the case anymore.
+
+% Search for extra literature regarding hypermedia now
+
+% Talk about companies that do hypermedia
+

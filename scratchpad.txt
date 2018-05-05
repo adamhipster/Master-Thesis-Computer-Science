@@ -1,0 +1,70 @@
+
+===== TIME SCRUBBING ====
+%3D manipulation
+%1
+% https://pdfs.semanticscholar.org/74c9/de7965171a2766a7caff15d9c353ead24faf.pdf, https://www.youtube.com/watch?v=YomeZfCo7P0
+
+%2
+% https://www.researchgate.net/profile/Rajvi_Shah5/publication/260665446_Interactive_Video_Manipulation_Using_Object_Trajectories_and_Scene_Backgrounds/links/5722044408ae262228a5afd9.pdf
+
+% 3
+% http://grail.cs.washington.edu/wp-content/uploads/2015/08/goldman08ivoa.pdf -- also: annotation and grid system
+
+% 4
+% https://dl-acm-org.vu-nl.idm.oclc.org/citation.cfm?id=1357096, https://www.youtube.com/watch?v=WcIy9O344bI
+
+% 5
+% https://www.fxpal.com/publications/trailblazing-video-playback-control-by-direct-object-manipulation.pdf
+
+%Dynamic timeline search: https://www.youtube.com/watch?v=fqf_w5JE6CA
+
+% Multiple timelines: https://smartech.gatech.edu/handle/1853/3397
+
+% Automatic sectioning: https://files.eric.ed.gov/fulltext/ED560543.pdf
+
+% Swift: Reducing the Effects of Latency in Online Video Scrubbing: https://pdfs.semanticscholar.org/fd2d/d8d327fa678113fc455f8c8a3f9b39d29fe9.pdf, https://www.youtube.com/watch?v=64CmQGbeXc4
+
+% Swifter: Improved Online Video Scrubbing: https://d2f99xq7vri1nk.cloudfront.net/legacy_app_files/pdf/p1159-matejka.pdf
+
+%SmartPlayer: User-Centric Video Fast-Forwarding: https://dl-acm-org.vu-nl.idm.oclc.org/citation.cfm?id=1518823, https://www.youtube.com/watch?v=-VGBOR1ZNw0
+
+% Data-driven interaction techniques: 
+% https://www.youtube.com/watch?v=hHuRiWv-IJY
+
+ 
+%MOOC STUDY -- customized dynamic time-aware word-cloud, video pages, and a 2-D timeline: https://dl-acm-org.vu-nl.idm.oclc.org/citation.cfm?id=2701408
+
+% Review: https://www.researchgate.net/profile/Klaus_Schoeffmann2/publication/282468629_Video_Interaction_Tools/links/5744618f08aea45ee850cde5/Video-Interaction-Tools.pdf
+% Biggest critique of the review is no user evaluation
+
+% In their study the users had to perform known-item search tasks in videos of about one
+% hour duration by using a simple HTML5 video player. The results of their study show
+% that users mainly use forward navigation with the seeker-bar (in 48% of the time) but
+% also simple playback (36%) in order to look for desired content in videos. They, however,
+% rarely use reverse navigation (only in 17% of the time). The analysis of the navigation
+% logs clearly shows that most users prefer to search linearly from the beginning to the
+% end and restart from the beginning if the search was not successful.
+
+% Hypervideo 360º
+% Many of
+% these tools try to follow metaphors from real life, such as film strips, multiple parallel
+% displays, and simulated tape recorders. Many interfaces make use of the third dimension
+% and visualize content in structures like a 3D helix or a 3D ring. A 3D cube was
+% especially interesting as it utilizes 3D to summarize the motion of a video through
+% voxel-based visualization. It is also observable that many tools try to make navigation
+% in videos more convenient by using concepts like elastic navigation sliders with rubberband
+% effects, direct manipulation of objects, and synchronized display of thumbnails.
+% A few authors also focus on improved navigation of streamed videos, which seems to
+% be very important since usage of video streaming is growing quickly
+
+% The analysis of the navigation
+% logs clearly shows that most users prefer to search linearly from the beginning to the
+% end and restart from the beginning if the search was not successful.
+
+% However, less attention has been paid on evaluating user behavior and designing
+% user interfaces to better support the discovered behavior. Future works on video navigation
+% should consider such findings when designing improved video interaction methods.
+% Similarly, more studies should be performed on other video interaction methods
+% in order to elicit real user needs (cf. [Worring et al. 2012]).
+
+% Do you have multiple YouTube videos that you can manipulate individually? Or should it be at the level of a subject?

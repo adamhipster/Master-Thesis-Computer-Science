@@ -1,0 +1,6 @@
+When is something a footnote and when is it not?
+Divide everything up into sections, so you can basically cite everything unless you have long-winded
+https://nl.sharelatex.com/learn/Bibliography_management_in_LaTeX 
+
+How do I do in-text quote citations?
+According to in-text-citations_acm.doc you first mention the author, then cite and put a citation after the quote like so "bla bla" [14].

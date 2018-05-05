@@ -1,0 +1,168 @@
+% IMPORT SETTINGS
+% \documentclass[12pt,a4paper,twoside,openright]{report}
+\documentclass{report}
+\input{Settings}
+
+
+% % Backtick program
+\usepackage{luacode}
+\begin{luacode}
+function backticks2tt ( input )
+    local isQuoteMatch = input:find("`(..-)'")
+    if isQuoteMatch == nil then
+        return ( input:gsub ( "`(..-)`" , "\\texttt{\\detokenize{%1}}" ) )
+    end
+end
+\end{luacode}
+\AtBeginDocument{\directlua{luatexbase.add_to_callback(
+  "process_input_buffer", backticks2tt, "backticks2tt" )}}
+% End backtick program
+ 
+%both single quotes
+\def\bsq#1{\lq{#1}\rq}
+
+% % BIBLIOGRAPHY SETTINGS EXPLICITLY IN MAIN.TEX
+\usepackage[style=numeric, backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+% There can only be one DeclareSourcemap, see: https://tex.stackexchange.com/questions/142837/declaresourcemap-in-biblatex
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    % % Need to transform howpublished field to URL field. --> https://tex.stackexchange.com/questions/311447/pdflatex-refuses-to-process-bib-file-with-hash-sign
+    \map{
+      \step[fieldsource=howpublished, match=\regexp{\A\\url\{(.+)\}\Z}, final]
+      \step[fieldset=url, fieldvalue={$1}]
+      \step[fieldset=howpublished, null]
+    }
+    
+    % Using source maps in order to split github from other online sources
+    \map{
+      \step[fieldsource=url, match={github.com}]
+      \step[fieldset=keywords, fieldvalue={$1}]
+    }
+    
+    % Bold inproceedings YouTube videos, this part puts the string "important" in the keyword field
+    \map{
+      \pertype{inproceedings}
+      \step[fieldsource=note, match={youtube.com}, final]
+      \step[fieldsource=keywords, match=\regexp{\A(.+)\Z}, replace=\regexp{$1,}]
+      \step[fieldset=keywords, fieldvalue={important}]
+    }
+  }
+}
+
+% Look at all references that have the "important" string in the keyword field and make the in-text citation bold by renewing the macro
+\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{\ifkeyword{important}{\mkbibbold{#1}}{#1}}}
+\DeclareFieldFormat{boldimportant}{\ifkeyword{important}{\mkbibbold{#1}}{#1}}
+\renewbibmacro*{cite}{%
+  \printtext[bibhyperref]{%
+    \printtext[boldimportant]{%
+      \printfield{labelprefix}%
+      \printfield{labelnumber}%
+      \ifbool{bbx:subentry}
+        {\printfield{entrysetcount}}
+        {}}}}
+
+% See: https://tex.stackexchange.com/questions/424984/biblatex-generate-which-reference-types-you-have-in-your-bib-file-for-automati
+\DeclareBibliographyCategory{alreadyinbib}
+
+\AtEveryBibitem{%
+  \addtocategory{alreadyinbib}{\thefield{entrykey}}%
+}
+
+% Using source maps in order to split github from other online sources
+% \DeclareSourcemap{
+%   \maps[datatype=bibtex]{
+%     \map{
+%       \step[fieldsource=url, match=\regexp{github.com}]
+%       \step[fieldset=keywords, fieldvalue={$1}]
+%     }
+%   }
+% }
+
+
+% END BIBLIOGRAPHY SETTINGS
+
+\begin{document}
+% COVER PAGE, TITLE PAGE AND IMPRINT PAGE
+% \pagenumbering{roman}			% Roman numbering (starting with i (one)) until first main chapter
+% \input{include/frontmatter/Titlepage}
+
+% ABSTRACT
+% \newpage
+% \input{include/frontmatter/Abstract}
+
+% ACKNOWLEDGEMENTS
+% \newpage
+% \input{include/frontmatter/Acknowledgements}
+
+
+% TABLE OF CONTENTS
+% \newpage
+% \tableofcontents
+
+% OTHER FRONTMATTER
+% List of figures (add to table of contents)
+% \cleardoublepage
+% \addcontentsline{toc}{chapter}{\listfigurename} 
+% \listoffigures
+% List of tables (add to table of contents)
+% \cleardoublepage
+% \addcontentsline{toc}{chapter}{\listtablename}  
+% \listoftables
+
+
+% START OF MAIN DOCUMENT
+% \cleardoublepage
+% \setcounter{page}{1}
+% \pagenumbering{arabic}			% Arabic numbering starting from 1 (one)
+% \setlength{\parskip}{0pt plus 1pt}
+
+% \input{front.tex}
+
+% \newpage
+% \input{foreword.tex}
+
+% This is all introduction!
+\input{introduction.tex}
+% \input{history_hyper_media.tex}
+% \input{explorations.tex}
+
+% \input{exploration1.tex}
+% \input{exploration2.tex}
+% \input{exploration3.tex}
+% \input{exploration4.tex}
+% \input{exploration5.tex}
+% \input{exploration6.tex}
+
+% \input{discussion.tex}
+
+
+% APPENDICES
+% \cleardoublepage
+% \appendix
+% \setcounter{page}{1}
+% \pagenumbering{Roman}			% Capitalized roman numbering starting from I (one)
+
+% appendix pages
+% \input{exploration2_playlist.tex}
+% \input{exploration3_appendix.tex}
+% \input{exploration6_appendix.tex}
+
+% BIBLIOGRAPHY
+\printbibheading
+\printbibliography[heading=subbibliography, type=article, title={Articles}]
+\printbibliography[heading=subbibliography, type=inproceedings, title={Conference Papers}]
+\printbibliography[heading=subbibliography, type=book, title={Books}]
+\printbibliography[heading=subbibliography, type=inbook, title={Book Chapters}]
+\printbibliography[heading=subbibliography, type=incollection, title={Chapters in a Collection}]
+\printbibliography[heading=subbibliography, type=MastersThesis, title={Master Theses}]
+\printbibliography[heading=subbibliography, type=techreport, title={Tech Reports}]
+\printbibliography[heading=subbibliography, keyword=github.com, title={Github repositories}]
+\printbibliography[heading=subbibliography, type=online, notkeyword=github.com, title={Other online sources}]
+\printbibliography[heading=subbibliography, type=misc, title={Misc}]
+\printbibliography[heading=subbibliography, notcategory=alreadyinbib,title={Missing Entrytypes}]
+
+% \printbibliography
+
+\end{document}

@@ -1,0 +1,173 @@
+\chapter{Appendix Exploration 3 part 1: The first time I tried to port XIMPEL to React and failed}
+\label{chap:exploration3_appendix_part1}
+% glossary:
+% media type: a specific media class name (e.g. Video or Audio) in both plain JS XIMPEL and XIMPEL React
+% media item: a specific instance of any media type
+
+For porting XIMPEL to ReactJS I thought it had the following advantages:
+\begin{itemize}
+    \item A lot of parsing logic could be done via ReactJS and Webpack by transforming the XIMPEL playlist to a declarative language that is completely compliant with JSX. So there is no need to create a parser.
+    \item The virtual DOM would replace the in-memory configuration code that has been written for XIMPEL. So there is no need to write in-memory configuration code.
+    \item Cross-browser support is suddenly managed by the maintainers of the ReactJS framework.
+    \item By teaching XIMPEL to students, you have to teach about ReactJS to students who want to extend XIMPEL which introduces them to a lot of computer science concepts implicitly.
+\end{itemize}
+
+% Veel parsing logic kan via React worden gedaan en hoeft niet meer worden opgeschreven, omdat de XIMPEL playlist basically een JSX datatype wordt.
+% Hetzelfde geldt voor de playlist tree dat in het geheugen wordt opgeslagen: React doet dit via de virtual DOM.
+% Het maken van mediatypes en dergelijke wordt ook een stuk flexibeler, omdat het aanmaken van een mediatype betekent dat er een extra React component wordt gemaakt.
+% Nu kun je mensen stiekem HTML/CSS onderwijzen als ze een XIMPEL playlist maken, terwijl de kern van XIMPEL blijft bestaan. 
+
+% Een mogelijk nadeel:
+% Een nadeel is dat elke child node (HTML of React Component) onder elke child node mag waardoor er invalid playlists kunnen bestaan. React is misschien te expressief. Het nadeel is volgens mij niet heel groot, omdat de gebruiker er visueel mee wordt geconfronteerd.
+
+In short, the idea was to see if it is possible to make the ReactJS framework work for us. If this is possible, then we as XIMPEL developers have a free lunch! Who does not want a free lunch?
+
+
+% De voordelen 1 tot en met 3 blijken onwaar te zijn. Ik kwam erachter dat veel parsing logic en playlist tree logic nog steeds geprogrammeerd zou moeten worden, en het maken van eigen mediatypes zou net zo flexibel zijn -- niet flexibeler. Voordeel 4 is echter wel waar, mits je XML opgeeft en studenten laat programmeren in JSX, maar dan wordt XIMPEL ook wat complexer helaas. Mijn XIMPEL React programma laat wel zien hoe je XML kan vertalen naar React components, wat ik supergaaf vind om te zien! :)
+
+To validate these assumptions I made a very simple prototype of creating a custom React component in an XML file. The XML file would be read in by a React class that I programmed. Furthermore, that custom React component would later on then correspond to a media item (such as a video or image) in XIMPEL. What I quite quickly found is that I had to hack my way around the framework. 
+
+The first assumption that I invalidated with this is that a lot of the virtual DOM would replace the in-memory configuration code. This has not been the case. While it is true that the XML-parser of Webpack loads the XML in a data structure it is an object. Therefore, it is unknown which element comes first. The advantage of the in-memory configuration that it is loaded in a tree structure. This ease of use, or lack of it, has its implications for writing a framework.
+
+Another assumption that came with a lot of hairy problems was the idea that this would be useful for education since you could teach advanced students ReactJS. This is true. Unfortunately, I had to program my way around the framework so much that this would also have been true for mere beginners at XIMPEL. In order to explain this, I will have to explain the approach that I made and the code that I created.
+
+\subsection{Methodology and implementation}
+To test whether to see if XIMPEL would benefit from ReactJS I created a simple toy playlist. The idea was to create more and complex playlists as development would go along. If there would be a significant roadblock for any reason, then the conclusion would be that porting XIMPEL to ReactJS may not be a good idea.
+
+In this toy playlist (see playlist \ref{playlist:ximpel_react}) the goal was to see if I could extract data from attributes and handle nesting. The XML tag names themselves are arbitrary and for that reason I prefer short names. The attributes `text` and `sup` both were meant for the display of text.
+
+\begin{lstlisting}[language=XML, caption=A toy playlist, label=playlist:ximpel_react]
+<ximpel>
+  <hey text="You made it to the end of the course!" />
+  <hey text="Hello World!" />
+  <yolo sup="something">
+    <hey text="yay!" />
+  </yolo>
+</ximpel>
+\end{lstlisting}
+
+From an implementation standpoint (see Github), this playlist is loaded in as an attribute the `Playlist` component called `data`. The `Playlist` component takes all unique keys and iterates over the data via the `.map` array method. In this method the element name is taken and saved. The `.map` method returns a lookup of the key in `data` which is chained to a different `.map` as well because in this `.map` method one actual element is going to be rendered. In there it searches for a single child element (multiple childs has not been implemented). It returns the parent and child. 
+
+The biggest issues with this code -- other than the one child limitation -- is that in order to render the parent and child to `eval` functions need to be used. This is because the XML playlist needs to be interpreted as React code. First of all, `eval` is evil for security reasons, which is also outlined by Stefan Bruins who had to use it in order to port XIMPEL to JavaScript \cite{stefan2016}. However, perhaps more problematic is that using `eval` also necessitates using `React.createElement` as opposed to the usual React syntax. This means that this code is fighting against the framework in order to push through what it wants. 
+
+From a programming standpoint it is fine, except for the requirement that ReactJS was supposed to help make development easier, not hinder it. Another issue that can be clearly seen in the code is the lack of an in-memory configuration object. A React element itself is an object. The element that needs to be rendered itself is referred to as `\$` and possible children are referred to via a key. This means that React element parents and React element children have no explicit hierarchy as XIMPEL does have with its in-memory configuration object.
+
+\subsection{Conclusion}
+As I stated at the beginning of this chapter: ``the idea was to see if it is possible to make the ReactJS framework work for us. If this is possible, then we as XIMPEL developers have a free lunch! Who does not want a free lunch?`` The answer is, everyone wants a free lunch but unfortunately porting XIMPEL to ReactJS is not a free lunch. It is possible but takes time and effort. 
+
+This time and effort is not worth it because ReactJS gives no benefit regarding the in-memory configuration object.
+
+\chapter{Exploration 3 part 2: assessing the benefits for porting XIMPEL to React (successfully porting it to React)}
+\label{chap:exploration3_appendix_part2}
+When I wrote the previous chapter I was finished with my exploration. However, by writing it up I was forced to take a close look at the source code. Because I needed to look up the source code I needed to look up the dependencies. And when I looked at the dependencies, I noticed that the XML parser of Webpack uses a library that I did not look at. Upon further inspection this dependency of the XML parser of Webpack showed that the XML parser was configurable! Unfortunately I did not see this before, because I started developing too soon while not carefully reading the small documentation.
+
+\section{Webpack XML parser setup}
+There were two modifications that allowed for a much more successful exploration compared to the first time. First, I modified the parser to have an explicit tree structure by preserving order between siblings and parent-child relationships. In general, it is the question whether an XML document needs this type of order preserved since some XML documents could be treated as an unordered set. But for XIMPEL it is desperately needed that the XML document would be parsed as an ordered array. This feature gives more power to the programmer, in the same sense that a Turing complete system has more expressional power than a finite state machine. Without order there is chaos, and in this particular case there would sometimes be no way to determine which media item (such as a video or image) or subject should be loaded first.
+
+The second modification helped a lot in code readability. While it is not as game changing or groundbreaking as the first, code readability is a necessary requirement for a fruitful collaboration on any software project. For example, the default setting to denote attributes of a parsed XML tag itself was `$`, to denote inner text it is `_` and children `$$`. I renamed this to: `attributes`, `text` and `children` respectively.
+
+\section{Architecture and implementation}
+Since in this exploration I tried to explore if I could reimplement XIMPEL quickly, I did not consider architecture -- or even React best practices -- all that much. In that sense there is quite a bit of technical debt. Creating technical debt has also been done in order to find out what architectural patterns work and which does not. Another reason to create technical debt is because I follow the programming philosophy of Jonathan Blow, which is: try to produce as fast as possible and then when you hit performance bottlenecks or any other bottleneck of any kind, only then try to be smart about solving that bottleneck. In some of his YouTube videos he goes in-depth how the code that he created for his award winning games like Braid and The Witness only have 6 to 10 percent of optimized code\footnote{I forgot which video, but here is his channel: \url{https://www.youtube.com/channel/UCCuoqzrsHlwv1YyPKLuMDUQ}.}. It has also been done in order to find in which regards one needs to fight the React framework and in which cases React gives the developer wings to fly and develop certain features of XIMPEL a lot faster.
+
+% old architecture
+\subsection{SubjectRenderer: the one component to render everything else}
+The architecture is therefore simple and because of it in some cases a bit convoluted. It starts off with the XIMPEL playlist already being parsed by Webpack which is exposed as the `playlist` variable in `App.js` in React. In there, there is a React Component called `SubjectRenderer`, which renders everything all at once in a given subject. It does this by having a method called `createChildren` (children of a subject) which transforms the parsed XML playlist into React Elements. The render function does not need to return a whole lot since the whole tree structure of React Elements that needs to be rendered is in one variable called `children` (see code snippet \ref{js:ximpel_react_render_return}). From an architectural standpoint, doing it this way makes parallel play immediately possible because the `subjectRenderer` renders everything within a subject, all at once.
+
+\begin{lstlisting}[language=JavaScript, caption=This is what is returned from the render function in the `subjectRenderer` React Component, label=js:ximpel_react_render_return]
+<div className="playlist">
+{
+  <div className="subjectRenderer">
+    { React.createElement(eval("Subject"), {...element.attributes, text: element.text}, children) }
+    <a href="#" style={{position: 'absolute', right: '50px'}} onClick={(e) => this.handleMediaItemClick(e)}>>></a>
+  </div>
+}
+</div>
+\end{lstlisting}
+
+This approach poses one big problem: how does a sequence get rendered? In normal XIMPEL playlists this still would not be a problem since in normal XIMPEL playlist, each subject tag only has one media item that needs to be rendered (e.g. see the Zaanse Schans playlist). So the problem is not with old XIMPEL playlists, it is with intermixing parallel play as opposed to sequential play within a XIMPEL subject.
+
+The normal convention for sequential play within XIMPEL is to have a `<sequence>` tag. I however, decided against this. In the newest example apps, no one is using the `<sequence>` tag, everyone is using the `<media>` tag. The current behavior of XIMPEL React media tags is that every media item put in there (e.g. video or images) all get rendered at once, since that is what the `subjectRenderer` does. I wanted to keep this functionality, because it makes sense, and in that way one does not need to type the `<parallel>` tag which saves a bit of typing.
+
+Instead, I opted for the possibility of putting multiple media tags in sequence (e.g. see code snippet \ref{js:multiple_media_tags}) and programmed the `subjectRenderer` in such a way that if it detects multiple media tags, then it plays these media tags compared to each other. The `subjectRenderer` would play the next media collection (with media items such as video or images in it) under one of two conditions: (1) all media items have a duration element and after the longest duration has expired it goes to the next media collection and (2) the user decides manually that he or she wants to play the next media collection by clicking on a ``next media collection'' button.
+
+% playback works as follows: (1) a message and video are played at the same time and stop after 10 seconds in order to switch to the next media collection, (2) a textblock and terminal are played at the same time and stop after 25 seconds in order to go to the next media collection and (3) it ends with a message with the text ``test'' which is shown for an indefinite amount of time
+\begin{lstlisting}[language=XML, caption=caption is in the comments \textbf{to do}, label=js:multiple_media_tags]
+<subject id="lesson1">
+  <media>
+    <message message="PWD Tutorial" duration="5" />
+    <video x="0px" y="200px" width="400px" height="400px" duration="10">
+        <source file="./pwd" extensions="mp4" types="video/mp4" />
+        <overlay score="+200" scoreId="yay" leadsTo="lesson2" width="600px" height="75px" x="500px" y="500px" message="next lesson"/>
+    </video>
+  </media>
+  <media>
+    <textblock duration="5" message="Type in pwd and the terminal displays which directory you are working in." width="600px" height="800px" x="0px" y="100px" color="#0f0" fontsize='50px' fontcolor="#fff"/>
+    <terminal x="800px" duration="25"/>    
+  </media>
+  <media>
+    <message message="test" />
+  </media>
+  <youtube duration="10" id="DrgML20YxaA" width="200px" height="400px" x="1100px" y="200px" stopAtSubjectId="lesson3"/>
+</subject>
+\end{lstlisting}
+
+From an architectural standpoint the `subjectRenderer` is possibly a bit convoluted now. Its basic functionality is to render everything in a subject all at once, but it modifies the `children` tree full of React Elements in order to allow for the intermixing of parallel play and sequential play. The reason this is perhaps convoluted is because this `subjectRenderer` does not \textit{only} render subjects, it also controls how it renders the subject. So, for a next implementation one needs to look if there needs to be some form of modularization here.
+
+% old architecture
+\subsection{Creation of React Elements}
+This part explains how the `createChildren` method works in the `subjectRenderer` component. The conceptualization of this method happened many months prior before its implementation and is one of the big reasons why I wanted to explore if XIMPEL could be ported quickly to React.
+
+The method starts with a parsed XML subject sub-tree. The method traverses and transforms every XML parsed tag to a React Element via depth-first tail recursion. The exception to this rule is the parsed subject tag, since that tag needs to be transformed at render time (see code snippet \ref{js:ximpel_react_render_return}), it is basically a peculiarity of React. 
+
+In order to transform an XML tag into a React Element, the following needs to happen: (a) the lowercase tag name needs to change to a name that starts with a capital letter, (b) the attributes need to be extracted from the XML tag and (c) there needs to be recursively determined if there are children of said XML tag. These three things are plugged into as three arguments (argument a, b and c respectively) into the `React.createElement` api method. The magic happens when the capitalized XML tag name (see a) gets evaluated by the `eval` function. By evaluating it, it allows a name to correspond to a React component. The actual manner of how this looks like is shown in \ref{js:createElement}.
+
+% in order to transform an XML tag to a React element: a capitalized xml tagname (`childName`) needs to be provided, the attributes of the xml tag (`child.attributes`) and the children of the XML tag (which are already transformed into React components via a recursive mechanism). The eval function allows an XML tag name correspond to a React component
+\begin{lstlisting}[language=JavaScript, caption=caption is in the comments \textbf{to do}, label=js:createElement]
+children.push(React.createElement(eval(childName), {...child.attributes, text: child.text}, grandChildren));
+\end{lstlisting}
+
+And that is the magic of `createChildren`. Every XML tag name corresponds to a React component! When I started with exploration one and realized the similarities between the idea behind the XIMPEL playlist and React, I realized that a XIMPEL playlist is a huge set of React Component invocations. The XIMPEL playlist denotes which React component needs to be called.
+
+% influenced by old architecture
+\subsection{Difference between media types in JS XIMPEL and XIMPEL React}
+This simple one to one mapping, which is also done in the JavaScript version of XIMPEL (JS XIMPEL)\footnote{I know that both are in JavaScript, but ReactJS makes the difference. Hence, I call one version JS XIMPEL and the React version: XIMPEL React.} allows for a clear separation of concerns. The difference between the JS XIMPEL and XIMPEL React is that in JS XIMPEL this one to one mapping needed to be more explicitly programmed compared to XIMPEL React. 
+
+% not true anymore
+Here is what is more explicit: JS XIMPEL has an in-memory configuration object, where media items were modelled. In XIMPEL React, an XML tag maps one to a React component. Such a component is capable of having properties (and state but that is not important for this argument). A React component plus properties mimics an in-memory model of a media type. 
+
+% true
+Furthermore, a React component also provides render capabilities dependent on the Component state. It is important to note that in XIMPEL React every media type Component like `Video` and `Image` inherit from a React component called `MediaType` (which does not have the same functionality as MediaType.js in JS XIMPEL), because all media types need to be able to do certain things (e.g. time tracking or knowing whether it should play or not). 
+
+% bit meh
+While it is a rough comparison: the `MediaType` from XIMPEL React seems to mimic some of the `MediaPlayer` functionality of JS XIMPEL. The specific Media components in XIMPEL React are the same as the specific media types (e.g. Image.js) in JS XIMPEL. This is a rough comparison, because JS XIMPEL is created with a more robust architecture in mind. For example, videos or YouTube videos ends up calling an `ended` method in `MediaType.js` JS XIMPEL, meaning ending media items in JS XIMPEL is centralized. In XIMPEL React a YouTube video cannot end (at the time of writing) and a HTML5 video does not end up calling the `MediaType` component. It first calls the `handleEnd` function on itself (the `Video` component) and then calls the `SubjectRenderer` directly to change to another subject via a `leadsTo` attribute. 
+
+% not true anyomore
+Furthermore, at the time of writing, it is not possible for a video that has ended to switch to a next media item if there happens to be one. Currently, it is only possible to switch to a next media item if every media item has an explicit duration. This duration should be shorter in seconds than that it takes for the HTML5 video media item to call `handleEnd` since `handleEnd` determines the next subject via the `leadsTo` attribute. In general, certain media features in XIMPEL React are more localized. Furthermore, while a large part of XIMPEL is implemented, it has not been implemented to a precise specification.
+
+\subsection{Difficulties encountered with React elements and React components}
+In general, React Elements provide a whole lot. It replaces the in-memory configuration object and complete trees of React Elements are readily available. There are however a couple of issues.
+
+First of all, it is tough to introspect if a specific React element is currently attached to the DOM. Comparing React elements or components on contents is too difficult because React elements and React components are complex objects. A quick workaround is to only compare properties of React elements or components but the danger of that is that it assumes that the XIMPEL playlist has no XML tag with exactly the same type of attributes with the same type of values, which is a dangerous assumption in itself.
+
+Second of all, React decides when it renders components. Sometimes this has been a problem because in some cases it would have been much easier to manually decide when a component should or should not be rendered. This could be a difficulty of React or expose my lack of professional experience as a React developer.
+
+Third (edit: deprecated see \footnote{I leave this paragraph here in order to show the creative process between programming and writing. Writing things down allows to make it more clear of what I am doing and that in turn improves the program as is demonstrated by this paragraph.} of why I leave this paragraph here), when a subject changes it may still play some of the same media types. It has different media items (e.g. a different path for a video) but it still needs to draw upon the same React components in order to render these media items (i.e. the same media type). From the perspective of React, this means that the React components that need to render the same media types should not be removed from the DOM. The difficulty associated with this is that it also means that the state of this React component does not change. And in some cases it can be relatively difficult to find a way to reset the state suited to play the new media item that uses the same media type. This is because a Video component, for example, is not itself aware which subject is playing. In the JS XIMPEL this is not a problem since every media type has a reference to the XIMPEL player via its constructor function. In React it is not that simple. A media type in XIMPEL React could use knowledge about the state of the `SubjectRenderer`. However, the state of the SubjectRenderer is a local state of that specific component. Since there only is one `SubjectRenderer` this could be solved by creating a static state, but that seems like an anti-pattern to do because Facebook (the creators of React) encourage developers to create a unidirectional data flow of state. \textbf{Perhaps I could implement the parent state being passed as a prop to all the React element children}. After, stopping with writing and trying to implement a possible solution I was forced to solve the biggest performance bottleneck that I created as technical debt in XIMPEL React. The performance bottleneck was that upon each render, the sub-tree of React elements of one subject would be recreated. Since React elements are complex objects and since the render method can be called for any reason, this is computationally very expensive. While trying to implement the idea of passing the `subjectRenderer` state as props to the complete rendered tree, the maximum call stack depth would be triggered (i.e. this shows how huge of a performance bottleneck it is). By refactoring the invocation of the `createChildren` method to the constructor and to the callback which is triggered upon the moment a subject is changed, passing down the state of the `subjectRenderer` as props to each mediaType is possible. This mimics the functionality of attaching a player object to a media type as has been done in JS XIMPEL. I know that I can improve the architecture of XIMPEL React by having made this change, but I do not fully understand how yet.
+
+%Still relevant
+\subsection{Overlays and scoring}
+Hypermedia applications have two important concepts: (1) media and (2) the fact that it is linked. Overlays allow this linking mechanism to happen within XIMPEL presentations. From an implementation standpoint it is important to understand that while overlays are related to subject, since overlays denote subject changes, they are not related to media types and media items. In that sense subjects within XIMPEL and the `subjectRenderer` specifically within XIMPEL React, serves as a controlling entity between media items and overlays.
+
+In XIMPEL React I decided to tightly couple overlays and scoring. In JS XIMPEL this is not the case, but I could not understand the various use-cases other than clicking an overlay. There were some other use-cases (e.g. when a subject starts) but that is still possible to be modelled with overlays. Furthermore, having smart links is inspired by Ted Nelson who has a strong critique on how links are not smart enough in the current day World-Wide-Web.
+
+The scoring mechanism has been easy to implement. In the playlist scores are made by having attaching values to the `score` attribute and the `scoreId` attribute. The `score` attribute supports values as ``+1'' or ``/5'' and will apply the operation, including the value, accordingly. The `scoreId` attribute allows for giving a specific variable name for the score, so any string that resembles a name would be an appropriate value there which XIMPEL React accepts. 
+
+By creating a static score object on the overlay component and putting a method call `handleScore` for everytime an overlay is clicked, the `Overlay` class will track any score that is being created within XIMPEL. These scores can be displayed via additional media types. In the current, implementation the `Message` media type shows a raw JSON output of scores produced within XIMPEL React.
+
+One current implementation drawback is that overlays need to subscribe to repeating media items or subject changes. This is possibly an architectural issue or an issue with React itself. I would not know why it may be an architectural issue, but it does not seem generic enough to let an `Overlay` component listen in on subject changes and repeating videos. The reason why it may be an issue with React itself is because the state of the overlays need to be resetted if media items repeat.
+
+\subsection{Data flow within XIMPEL React}
+The data flow within XIMPEL React tries to follow conventional ReactJS philosophy: try to have a unidirectional data flow as much as possible. However, sometimes this is not possible. If a child gets a state change earlier that a parent also would need to know, then it in some cases becomes difficult to do so. Conventional philosophy suggests to lift state. However, this has not always seemed to be possible, but furthermore it makes code readability worse. Moreover, it goes against the question of whether it is possible to reimplement XIMPEL with ReactJS quickly. 
+
+So instead of lifting state I used a trick that JS XIMPEL also used. I used a publish subscribe system. In the current implementation there are six publishers, six subscribers and five topics. This is small enough to oversee. If it gets an order of magnitude bigger, then another system needs to be considered, such as Redux.
+
+\subsection{Conclusion}

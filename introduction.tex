@@ -1,0 +1,53 @@
+\chapter{Introduction}
+In a lot of cases groundbreaking scientific discoveries are made by accident. Without these serendipitous discoveries we would not have: penicillin, the discovery of cosmic background radiation, the microwave, X-rays, the pacemaker, matches, gunpowder, nuclear fission and the chocolate chip cookie\footnote{\url{http://mentalfloss.com/article/53646/24-important-scientific-discoveries-happened-accident} and \url{http://www.women-inventors.com/Ruth-Wakefield.asp} and \url{https://www-aps-org.vu-nl.idm.oclc.org/publications/apsnews/200207/history.cfm}}. So it begs the question should we have a plan at all? Just explore! This is a risky proposition indeed but not one without merit. 
+
+In his book \textit{Against Method} Feyerabend argued for the idea that scientists should have a dose of theoretical anarchism \cite{feyerabend1993}. He showed that groundbreaking discoveries did not come about by adhering to a strict scientific methodology. Quite the contrary, in the case studies that he outlined all methodological principles were violated at some point. 
+
+This is not to say that researchers are able to do whatever they want, but if exploration is a part of research, then according to Feyerabend ``anything goes'' \cite{feyerabend1993}. And in this thesis, exploration will be the biggest theme. For I (Melvin Roest) explore. For I fiddle and break things. For I acknowledge my subjective perspective and try to advance the realm of scientific knowledge. 
+
+``What is the exploration you are on?'' you might ask. In its most simplest form I am exploring the intersection of a certain framework (XIMPEL) and its relationship to education, user profiling and hypermedia (the biggest theme). This is choice is not entirely objective. In most cases it cannot be. I study at the Vrije Universiteit Amsterdam and there is a research group developing this framework. If I would have done my Master thesis at the CWI (Institute of Informatics in The Netherlands), then I would have most likely done similar explorations with its competitor SMIL. Moreover, this choice has a component of necessity. If hypermedia and user profiling in hypermedia (and by extension the web) had been more well-documented this exploration had been more focused on (computer science) education. Alas, in order to serve education, exploring these topics is needed.
+
+Fortunately, XIMPEL has one saving grace in which I could make it sound objective, which is: for the last 10 years XIMPEL always attempted to be at the intersection of educational games and hypermedia. It furthermore never had a logging extension for user profiling
+\footnote{Though when my logging extension was complete, I discovered that another logging extension had been independently made for XIMPEL in Norway by Dan Michael O. Heggø and Huggo Huurdeman. Fortunately, the focus of both logging extensions are different enough in aim and design to be separate useful contributions.}. 
+It is most likely the only framework to have had this intersection. Therefore, asking the question of: ``what is the relationship between XIMPEL and education?'' does not sound out of the ordinary. Neither does ``how does XIMPEL need to be improved for it to better serve education?'' These were the questions I started with. 
+% Other questions I asked myself regarding the user profiling and hypermedia themes will reveal itself when the relevant chapters are there. I want you to explore a bit too.
+
+In my first explorations I extended the interaction functions of XIMPEL in order to create a command-line tutorial. Would it be beneficial to make such a thing with XIMPEL compared to creating it from scratch (spoiler alert: yes)? In other explorations I simply built on future work from Stefan Bruins since it was (1) future work and (2) it was a key pillar in creating a command-line tutorial. There also were explorations in which I had a failed result relatively quickly. Yet another exploration could be seen more as traditionally academic. My penultimate exploration is entirely conceptual. And my final exploration is a showcase of hacking for future XIMPEL media type developers. Though, I have to warn you dear reader, there is a secret final exploration. After reading this thesis, would you know which one it is? Knowing it gives a hint of the thesis writing process.
+
+On my explorations I got into more questions. Such as: ``what does interactivity mean for media and hypermedia?'' or ``is there a faster way to develop XIMPEL?'' and as a last teaser ``how could we improve the user experience of a XIMPEL presentation and make it less frustrating? Should it be less frustrating in the first place?'' These questions will be more formally introduced in each relevant chapter. 
+
+\section{What is XIMPEL?}
+Talking about a framework without explaining it does not sound like it is XIMPEL at all. It needs an explanation! More importantly, it needs a showcase. Multimedia frameworks and the like are best to be shown and explained afterwards. For the readers who never saw a XIMPEL presentation, Go to \href{ximpel.net/showcase}{http://www.ximpel.net/showcase}. The Abel Prize presentation and the tour of the Zaansce Schans presentation show various capabilities of what XIMPEL is able to do. 
+
+Now dear reader you have a choice. To read on, or to go to the link.
+
+What will you do?
+
+Who said that textual media has to be linear? You can jump to a video on the web and then read on.
+
+Click on \href{ximpel.net/showcase}{http://www.ximpel.net/showcase} if you want to see the showcase, or do nothing if you want to stay here.
+
+If you do nothing you are missing out dear reader. Our visual cortices process information so much better than the little areas we have dedicated to purely reading.
+
+I advice you to go to \href{ximpel.net/showcase}{http://www.ximpel.net/showcase}.
+
+You have made your choice\footnote{In time, there will be a mirror on \href{melvinroest.com/ximpel/showcase}{http://www.melvinroest.com/ximpel/showcase}.}. We will move on.
+
+The short explanation is that XIMPEL is a hypermedia player (linked media through overlays) or interactive video player (linked video through overlays), depending on whom is asked. The core feature of XIMPEL is that through XML, it is easy for non-programmers to play media and link it to other media by a mechanism called overlays. For example, one video is playing and there transparent square (an overlay) is in the upper right corner. A user clicks on it and another video with an image appears and both start playback from the beginning. That is the essence of XIMPEL.
+
+When it comes to the XIMPEL framework the following stakeholders take a role in the production or consumption of a presentation. (1) the XIMPEL core developers who maintain and expand the core of the framework. (2) XIMPEL media type developers who create plugins for the XIMPEL system. It is analogous to Wordpress plugin developers. (3) The author of a XIMPEL presentation. And finally, (4) users experiencing a XIMPEL presentation.
+
+XIMPEL its main focus is to make the lives of XIMPEL presentation creators -- also known as XIMPEL authors -- easy and simple while nudging them to become a bit computer literate. The way XIMPEL achieves this is by having an own XML specification for creating a XIMPEL presentation, known as a XIMPEL playlist. XIMPEL authors only need to know how to write this form of XML and when they do, they are able to make a presentation. It is useful in the same way that finite state machines (FSMs) are useful as opposed to a computer: the application of FSMs are limited but within that limit, it is easier to create what one wants to create.
+
+\section{Thesis structure}
+Before we move on I will introduce you to a short history of hypermedia and will explain what this is. This knowledge situates the context of what XIMPEL is, what it is not and which ideas from hypermedia are fundamental to XIMPEL. After that introduction we will move on to the explorations. For each exploration: we will first start with a short story on how I came about the idea to explore a certain topic and why it is relevant. Then I will continue to explore the topic. Each exploration will have its conclusion. After all the explorations have been presented a general discussion section concludes the thesis by summarizing it and by giving future work recommendations. 
+As a last note, all the code is on my personal Github account (view the links at \cite{github:ximpel_react, github:ximpel_js, github:ximpel_analytics_server, github:ximpel_terminal_media_type_server}). 
+
+% When one thinks about this a bit, one might wonder how a non-interactive artifact such as media could possibly intersect with an interactive artifact such as digital games. This is because \textit{hypermedia is interactive!} In short, hypermedia is media  with hyperlinks. Just like hypertext is text -- a form of media -- with hyperlinks. HTML5 has a lot of hypermedia functionality, HTML4 did not.
+
+
+% \subsection{The need for hypermedia in education}
+% A system like this allows users to deal with complex information. ``Reality is intertwinkled.'' 
+
+% A hypermedia system is good for describing linear and non-linear relationships between media content. One recurring theme for hypermedia is using it for education. %cite this as a motherfucker
+% A specific use case for that is for visual displays in museums. Another more generic use case is almost any slide show presentation.

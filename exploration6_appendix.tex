@@ -1,0 +1,46 @@
+\chapter{Appendix Exploration 6: the code needed in YouTube.js for a partial subject change}
+\label{chap:exploration6_appendix}
+
+\begin{lstlisting}[language=JavaScript]
+	var traverse = function(model, path){
+		path.push(model);
+		if(model instanceof ximpel.MediaModel){
+			for (var i = 0; i < model.overlays.length; i++) {
+				var overlay = model.overlays[i];
+				for (var j = 0; j < overlay.leadsToList.length; j++) {
+					var leadsTo = overlay.leadsToList[j];
+					if(customAttributes.stopAtSubjectId === leadsTo.subject){
+						insertModel(path.slice());
+						return;
+					}
+				}
+			}
+			return;
+		}
+		for (var k = 0; k < model.list.length; k++) {
+			traverse(model.list[k], path.slice());
+		}
+	}.bind(this);
+
+	var insertModel = function(path){
+		var subjectId = path[0].subjectId;
+		var sequenceModel = this.player.subjectModels[subjectId].sequenceModel;
+
+		var traverse = function(sequenceModel){
+			for (var i = 0; i < sequenceModel.list.length; i++) {
+				var model = sequenceModel.list[i];
+				if(model instanceof ximpel.ParallelModel){
+					var sqModel = new ximpel.SequenceModel();
+					sqModel.add(this.model); //create SequenceModel
+					model.add(sqModel);					//insert in Parallel Model
+					return;
+				} else {
+					traverse(model.list[i]);
+				}
+			}
+			return;
+		}.bind(this);
+
+		traverse(sequenceModel);
+	}.bind(this);
+\end{lstlisting}

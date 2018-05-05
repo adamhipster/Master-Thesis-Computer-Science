@@ -1,0 +1,94 @@
+Future work: what are the advantages and disadvantages for having synchronization constraints?
+Future work: implementing sync arcs? -- no, this is XIMPEL
+Why are SMIL channels useful?
+How is sync arcs and constraints relevant for XIMPEL
+
+
+TO DO in history of hypermedia (when everything else is finished)
+% Explain how XIMPEL works -- isn't it explained already somewhere?
+% Search for extra literature regarding hypermedia now
+% Talk about companies that do hypermedia
+
+===
+hallo Melvin
+
+zonder meer een goed idee, en (ter informatie) er is eerder een tekentool (met server, voor meerdere annotators) gemaakt, maar helaas is die verloren gegaan.
+Mijn advies in dit stadium is: exploreer en documenteer het idee, en laat een verdere uitwerking over aan de toekomst, dwz in de context van een nieuwe baan of (mogelijk PhD) project!
+
+leuk om van je te horen, en hou ons op de hoogte!
+
+met groet
+
+Anton
+===
+
+How could one create effects for XIMPEL the easiest? 
+--> CSS
+Don't put the same constraints on as that you normally have (so do not support < IE 11)
+
+---
+
+Online platform to create and distribute XIMPEL apps
+
+``Hey sorry
+I slept until late
+I'm in a weird bad place
+and in a weird way I worked on my thesis.''
+
+---
+literature review hypermedia frameworks
+
+---
+Are there articles on creative constraints it is another way to justify XIMPEL
+
+---
+XIMPEL has two ideas which compete a little.
+1. A playlist defined in XML to make programming easier
+2. Hypermedia principles
+
+---
+If I have time left over, create presentations for the presentations I put in there? I could also encourage them to just let them play it themselves!
+
+---
+Check the word of in-memory configuration object vs. in-configuration memory object
+
+---
+Create example playlists online?
+Found @: Currently, XIMPEL is now able to play playlist \ref{playlist:example_playlist}, which is in appendix \ref{chap:exploration2_appendix}, which means it is able to play parallel media. Note that the media and sequence tags can be interchangeably used. 
+
+---
+How does XIMPEL relate to rhetoric and procedural rhetoric?
+
+---
+Make an exploration timeline in exploration 3 if Sander and Anton are completely unsettled.
+
+---
+Implement ximpel branches in React
+
+---
+Future work chapter 7: However, conceptualizing a first iteration of such an algorithm or algorithm design approach leaves opportunity for further realization in future work.
+
+---
+Future work: planned user study regarding measuring frustration
+
+---
+Also one of the outcomes of this thesis should be: clear formulated research questions and an answer to how much has been done.
+
+---
+Future work: Since interactive video, hypermedia and XIMPEL applications are a bit different than other applications, an observation study should be done as to what makes users frustrated. From such an observation study it should be possible to see what frustrated behaviors users have and how this could be possibly measured. The measures that I programmed for are merely a guess.
+
+---
+change clmtrackr to CLMtrackr
+
+---
+Check with compilation if the YouTube links get bolded (of the inproceedings type)
+Also: put Moewe (of tex stack exchange) in the acknowledgements
+
+---
+Possible improvement: edit the CS50 image (won't do, lack of time)
+
+---
+Misschien een XIMPEL style guide maken? -- evt. in template zetten
+Bijv. scene skipping via overlays
+
+---

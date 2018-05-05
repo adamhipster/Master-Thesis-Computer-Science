@@ -1,0 +1,19 @@
+Thesis failure (frustration + engagement, needing to ditch my other thesis): 8 weeks
+Learning JavaScript and NodeJS: 4 weeks (all the overtime I worked at NYCDA + code school - some reduction)
+---> 12 weeks
+
+Exploration 1 (command-line tutorial, server): 1 week (literature/architecture + coding it)
+Exploration 2 (parallel media player): 2 weeks (literature, reading XIMPEL framework, Stefan's thesis + coding it)
+Exploration 3 (ReactJS): 1 week (learning ReactJS + coding it)
+Exploration 4 (Frustration / Engagement Framework): 1 week (coding client-side and server-side, theoretical framework is already included in the thesis failure)
+Exploration 5 (Time Scrubbing): 2 weeks (UI/UX course + thinking + designing)
+Exploration 6 (Partial Subject Refresh): 1 week
+---> 8 weeks
+
+Writing thesis + literature study: 4 weeks
+
+
+
+Presentation + Planning + Second Presentation: 1 week
+Meetings with Anton and Terragon, etc.: 2 weeks
+
